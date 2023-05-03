@@ -25,14 +25,17 @@ public class MockAwsSecretController {
   private final Region region = Region.of("us-west-2");
   private final String url = "http://localhost:4566";
 
+  private String mockSecretValue = "{\"password\": \"P@ssw0rd\"}";
+
 
   @GetMapping("post")
-  public void createMockSecret() throws URISyntaxException {
+  public String createMockSecret() throws URISyntaxException {
     SecretsManagerClient client = SecretsManagerClient.builder()
         .endpointOverride(new URI(url))
         .region(region)
         .build();
     createMockSecretData(client);
+    return String.format("create mock secret value for test: %s", mockSecretValue);
   }
 
   @GetMapping
@@ -59,7 +62,7 @@ public class MockAwsSecretController {
 
     if (getSecretValueResponse != null){
       String secret = getSecretValueResponse.secretString();
-      Map<String, String> map = JSON.parseObject(secret, new TypeReference<>(){});
+      Map<String, String> map = JSON.parseObject(secret, new TypeReference<Map<String, String>>(){});
       return map.toString();
     }
     return "error";
@@ -68,7 +71,7 @@ public class MockAwsSecretController {
   private void createMockSecretData(SecretsManagerClient client) {
     CreateSecretRequest build = CreateSecretRequest.builder()
         .name(secretName)
-        .secretString("{\"password\": \"chivalry23\"}").build();
+        .secretString(mockSecretValue).build();
     client.createSecret(build);
   }
 

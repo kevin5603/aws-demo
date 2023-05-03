@@ -12,12 +12,15 @@ import software.amazon.awssdk.services.secretsmanager.SecretsManagerClient;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRequest;
 import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueResponse;
 
+/**
+ * make sure add accessKey and secretKey in your environment
+ */
 @RestController
 @RequestMapping("secret")
-public class SecretController {
+public class AwsSecretController {
 
   @GetMapping
-  public String getSecret() throws URISyntaxException {
+  public String getSecret() {
     String secretName = "/dev/test";
     Region region = Region.of("us-west-2");
 
@@ -44,12 +47,7 @@ public class SecretController {
       String secret = getSecretValueResponse.secretString();
       Map<String, String> map = JSON.parseObject(secret, new TypeReference<Map<String, String>>(){});
 
-      String nestJsonValue = map.get("nest");
-      Map<String, String> map2 = JSON.parseObject(nestJsonValue, new TypeReference<Map<String, String>>(){});
-
       map.forEach((k, v) -> System.out.println(k + ":" + v));
-      System.out.println("=======");
-      map2.forEach((k, v) -> System.out.println(k + ":" + v));
       System.out.println("=======");
       return map.toString();
     }

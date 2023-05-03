@@ -1,6 +1,7 @@
 package com.kevin.aws_demo.controller;
 
 import com.kevin.aws_demo.modal.Employee;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("external")
 public class ExternalResource {
 
-  private final List<Employee> employees = List.of(
+  private final List<Employee> employees = Arrays.asList(
       new Employee("kevin", getRandomAge()),
       new Employee("julia", getRandomAge()),
       new Employee("david", getRandomAge()),

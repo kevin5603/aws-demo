@@ -25,7 +25,7 @@ import software.amazon.awssdk.services.secretsmanager.model.GetSecretValueRespon
 @RunWith(SpringRunner.class)
 public class MockAwsSecretControllerTest {
   private static final String SECRET_NAME = "/dev/test";
-  private static final String SECRET_VALUE = "{\"password\": \"chivalry23\"}";
+  private static final String SECRET_VALUE = "{\"password\": \"P@ssw0rd\"}";
   private static final DockerImageName localstackImage = DockerImageName.parse("localstack/localstack:latest");
   @ClassRule
   public static LocalStackContainer localstack = new LocalStackContainer(localstackImage).withServices(SECRETSMANAGER);
